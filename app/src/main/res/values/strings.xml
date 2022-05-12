@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">ui</string>
+    <string name="app_name">Skin Cancer Detection</string>
+    <string name="classificationResult" />
+    <string name="filename">No Image Selected.</string>
 </resources>
