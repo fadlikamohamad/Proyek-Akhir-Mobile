@@ -26,6 +26,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Time;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -63,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
     Button predictButton, resetButton;
     PieChart pieChart;
     PieData pieData;
-    List<PieEntry> pieEntryList = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
         WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
         String ipAddress = Formatter.formatIpAddress(wifiManager.getConnectionInfo().getIpAddress());
 
-        String postURL = "http://192.168.88.142:5000/prediction/";
+        String postURL = "http:///192.168.56.142:5000/prediction/";
         MultipartBody.Builder multiBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
 
         for (int i = 0; i < selectedImagesPaths.size(); i++){
@@ -188,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         TextView classificationResult = findViewById(R.id.classificationResult);
-                        classificationResult.setText("Gagal terhubung ke server. Silahkan coba lagi!");
+                        classificationResult.setText("Tidak dapat terhubung ke server. Silahkan coba lagi.");
                         loading.setVisibility(View.GONE);
                     }
                 });
@@ -219,9 +220,9 @@ public class MainActivity extends AppCompatActivity {
                                 String class2 = class_score_2.getString("class");
                                 double score2 = class_score_2.getDouble("score");
 
-                                pieChart.setUsePercentValues(true);
-                                pieEntryList.add(new PieEntry((float) score1, class1));
-                                pieEntryList.add(new PieEntry((float) score2, class2));
+                                List<PieEntry> pieEntryList = new ArrayList<>();
+                                pieEntryList.add(new PieEntry((float)score1, class1));
+                                pieEntryList.add(new PieEntry((float)score2, class2));
 
                                 PieDataSet pieDataSet = new PieDataSet(pieEntryList, "");
                                 pieDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
@@ -235,8 +236,9 @@ public class MainActivity extends AppCompatActivity {
                                 legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
                             }
                             else
-                                classificationResult.setText("Oops! Ada yang salah.\nSilahkan coba lagi!");
+                                classificationResult.setText("Server sedang bermasalah. Silahkan coba beberapa saat lagi.");
                         } catch (Exception e){
+                            classificationResult.setText("Server sedang bermasalah. Silahkan coba beberapa saat lagi.");
                             e.printStackTrace();
                         }
                         loading.setVisibility(View.GONE);
