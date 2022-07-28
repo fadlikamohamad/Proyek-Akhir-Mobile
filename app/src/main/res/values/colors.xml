@@ -11,4 +11,5 @@
     <color name="green">#0B6623</color>
     <color name="green_cyan">#DBDDDC</color>
     <color name="orange">#FFA500</color>
+    <color name="splashBackground">#FFA500</color>
 </resources>

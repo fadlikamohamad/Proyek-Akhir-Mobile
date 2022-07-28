@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
         WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
         String ipAddress = Formatter.formatIpAddress(wifiManager.getConnectionInfo().getIpAddress());
 
-        String postURL = "http:///192.168.56.142:5000/prediction/";
+        String postURL = "https://pa-service-production.herokuapp.com/prediction/";
         MultipartBody.Builder multiBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
 
         for (int i = 0; i < selectedImagesPaths.size(); i++){
